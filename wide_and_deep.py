@@ -98,15 +98,15 @@ class Wide_and_Deep:
         conti_dense = Dense(256, use_bias=False)(conti_input)
         # 全結合層と各Embeddingの出力をくっつける
         concat_embeds = concatenate([conti_dense]+categ_embeds)
+        concat_embeds = Activation('relu')(concat_embeds)
         bn_concat = BatchNormalization()(concat_embeds)
-        concat_embeds = Activation('relu')(bn_concat)
         # 更に全結合層を3層重ねる
         fc1 = Dense(512, use_bias=False)(bn_concat)
-        bn1 = BatchNormalization()(fc1)
-        ac1 = ReLU()(bn1)
-        fc2 = Dense(256, use_bias=False)(ac1)
-        bn2 = BatchNormalization()(fc2)
-        ac2 = ReLU()(bn2)
+        ac1 = ReLU()(fc1)
+        bn1 = BatchNormalization()(ac1)
+        fc2 = Dense(256, use_bias=False)(bn1)
+        ac2 = ReLU()(fc2)
+        bn2 = BatchNormalization()(ac2)
         fc3 = Dense(128)(ac2)
         ac3 = ReLU()(fc3)
 
