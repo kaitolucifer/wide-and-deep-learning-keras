@@ -107,7 +107,7 @@ class Wide_and_Deep:
         fc2 = Dense(256, use_bias=False)(bn1)
         ac2 = ReLU()(fc2)
         bn2 = BatchNormalization()(ac2)
-        fc3 = Dense(128)(ac2)
+        fc3 = Dense(128)(bn2)
         ac3 = ReLU()(fc3)
 
         # 入力の層と最後の層をメンバー変数化（モデル作成用）
